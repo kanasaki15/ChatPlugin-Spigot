@@ -10,20 +10,21 @@ public final class ChatPlugin extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("StartUp Chat-Plugin Ver 1.0");
-
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
         getLogger().info("Shutdown Chat-Plugin Ver 1.0");
+        AsyncPlayerChatEvent.getHandlerList().unregister(this);
     }
 
-     @EventHandler
-     public void AsyncPlayerChatEvent(AsyncPlayerChatEvent e){
-        e.setCancelled(true);
-        String msg = e.getMessage();
-        e.setMessage("てすと : " + msg);
-
-     }
+    public class ChatListener implements Listener {
+        @EventHandler
+        public void chatMain(AsyncPlayerChatEvent e){
+            String msg = e.getMessage();
+            e.setMessage("test test" + msg);
+        }
+    }
 }
