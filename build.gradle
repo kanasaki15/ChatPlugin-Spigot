@@ -17,11 +17,14 @@ repositories {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
+
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compileOnly 'org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT'
+
+    compile group: 'com.ibm.icu', name: 'icu4j', version: '65.1'
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
@@ -30,8 +33,9 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         filter ReplaceTokens, tokens: [version: version]
     }
+
 }
 
-dependencies {
-    compile files('lib/icu4j-65.1.jar')
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
