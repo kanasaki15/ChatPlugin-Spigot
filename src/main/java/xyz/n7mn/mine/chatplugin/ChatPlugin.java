@@ -2,7 +2,6 @@ package xyz.n7mn.mine.chatplugin;
 
 import com.google.gson.Gson;
 import com.ibm.icu.text.Transliterator;
-
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 public final class ChatPlugin extends JavaPlugin {
 
@@ -41,17 +41,35 @@ public final class ChatPlugin extends JavaPlugin {
             Transliterator trans = Transliterator.getInstance("Latin-Hiragana");
             String msg2 = trans.transliterate(msg);
 
-            return msg2;
+            return kana2kanji(msg2);
         }
 
-        public String kana2kanji(String str){
-            // http://www.google.com/transliterate?langpair=ja-Hira|ja&text=
-            String RequestText = HttpGet("http://www.google.com/transliterate?langpair=ja-Hira|ja&text="+str);
-            Gson gson = new Gson();
-            String[] arr = gson.fromJson(RequestText,String[].class);
-            getLogger().info("debug : " + RequestText);
-            StringBuffer sb = new StringBuffer();
-            return "";
+        public String kana2kanji(String str) {
+            try {
+                // http://www.google.com/transliterate?langpair=ja-Hira|ja&text=
+                String url = "http://www.google.com/transliterate?langpair=ja-Hira|ja&text=" + URLEncoder.encode(str, "utf-8");
+                String RequestText = HttpGet(url);
+                getLogger().info("debug : " + url);
+                getLogger().info("debug : " + RequestText);
+                Gson gson = new Gson();
+                Object[] arr = gson.fromJson(RequestText, Object[].class);
+
+                StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < arr.length; i++) {
+                    Object[] s = gson.fromJson(arr[i].toString(),Object[].class);
+                    sb.append(s[1]);
+                    sb.append(" ,, ");
+                }
+                String mojiCode = "UTF-8";
+                if (System.getProperty("os.name").toLowerCase().startsWith("windows")){
+                    mojiCode = "windows-31j";
+                }
+                return new String(sb.toString().getBytes(mojiCode), mojiCode);
+            } catch (Exception e){
+                getLogger().info(e.getMessage());
+                return "";
+            }
+
         }
     }
 
