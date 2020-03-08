@@ -31,3 +31,7 @@ processResources {
         filter ReplaceTokens, tokens: [version: version]
     }
 }
+
+dependencies {
+    compile files('lib/icu4j-65.1.jar')
+}

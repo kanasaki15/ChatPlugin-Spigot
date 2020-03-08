@@ -1,8 +1,10 @@
 package xyz.n7mn.mine.chatplugin;
 
+import com.ibm.icu.text.Transliterator;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.event.*;
 
 public final class ChatPlugin extends JavaPlugin {
 
@@ -24,7 +26,15 @@ public final class ChatPlugin extends JavaPlugin {
         @EventHandler
         public void chatMain(AsyncPlayerChatEvent e){
             String msg = e.getMessage();
-            e.setMessage("test test" + msg);
+            e.setMessage(msg + " ("+r2k(msg)+")");
+        }
+
+        public String r2k(String msg){
+            Transliterator trans = Transliterator.getInstance("Latin-Hiragana");
+            String msg2 = trans.transliterate(msg);
+            getLogger().info(msg);
+            return msg2;
+
         }
     }
 }
