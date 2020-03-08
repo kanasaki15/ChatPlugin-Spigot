@@ -1,0 +1,4 @@
+name: Chat Plugin
+version: @version@
+main: xyz.n7mn.mine.chatplugin.ChatPlugin
+api-version: 1.13
