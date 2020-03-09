@@ -3,4 +3,5 @@
 
 使用ライブラリ等
 - [ICU4J](http://site.icu-project.org/) 65.1
+- [GSON](https://github.com/google/gson) 2.8.6
 - [Google CGI API for Japanese Input](https://www.google.co.jp/ime/cgiapi.html)
