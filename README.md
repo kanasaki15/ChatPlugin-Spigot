@@ -2,6 +2,7 @@
 
 動作環境
 - Spigot 1.15.2
+- Spigot 1.16.1
 
 使用ライブラリ等
 - [ICU4J](http://site.icu-project.org/) 65.1
