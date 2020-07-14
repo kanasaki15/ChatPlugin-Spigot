@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.BufferedReader;
@@ -21,14 +22,14 @@ public final class ChatPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        getLogger().info("StartUp Chat-Plugin Ver 1.0");
+        getLogger().info("StartUp Chat-Plugin Ver 1.1");
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        getLogger().info("Shutdown Chat-Plugin Ver 1.0");
+        getLogger().info("Shutdown Chat-Plugin Ver 1.1");
         AsyncPlayerChatEvent.getHandlerList().unregister(this);
     }
 
@@ -37,6 +38,15 @@ public final class ChatPlugin extends JavaPlugin {
         public void chatMain(AsyncPlayerChatEvent e) {
             String msg = e.getMessage();
             e.setMessage(msg + ChatColor.YELLOW + " (" + r2k(msg) + ")");
+        }
+
+        @EventHandler
+        public void commandChat (PlayerCommandPreprocessEvent e){
+
+            if (e.getMessage().startsWith("/tell") || e.getMessage().startsWith("/msg") || e.getMessage().startsWith("/say") || e.getMessage().startsWith("/me")){
+                e.setMessage(e.getMessage() + ChatColor.YELLOW + " (" + r2k(e.getMessage().replaceAll("/msg ","").replaceAll("/tell ","").replaceAll("/say ","").replaceAll("/me ","")));
+            }
+
         }
 
         public String r2k(String msg) {
