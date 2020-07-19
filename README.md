@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/kanasaki15/ChatPlugin-Spigot.svg?branch=master)](https://travis-ci.org/kanasaki15/ChatPlugin-Spigot)
+- [![Build Status](https://travis-ci.org/kanasaki15/ChatPlugin-Spigot.svg?branch=master)](https://travis-ci.org/kanasaki15/ChatPlugin-Spigot)
+- [Sponge版](https://github.com/kanasaki15/ChatPlugin-Sponge)
 
 動作環境
 - Spigot 1.15.2
