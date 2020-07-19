@@ -44,7 +44,18 @@ public final class ChatPlugin extends JavaPlugin {
         public void commandChat (PlayerCommandPreprocessEvent e){
 
             if (e.getMessage().startsWith("/tell") || e.getMessage().startsWith("/msg") || e.getMessage().startsWith("/say") || e.getMessage().startsWith("/me")){
-                e.setMessage(e.getMessage() + ChatColor.YELLOW + " (" + r2k(e.getMessage().replaceAll("/msg ","").replaceAll("/tell ","").replaceAll("/say ","").replaceAll("/me ","")));
+                int start = 2;
+                if (e.getMessage().startsWith("/say") || e.getMessage().startsWith("/me")){
+                    start = 1;
+                }
+
+                String[] stringSplit = e.getMessage().split(" ");
+                StringBuffer sb = new StringBuffer();
+                for (int i = start; i < stringSplit.length; i++){
+                    sb.append(stringSplit[i]);
+                }
+
+                e.setMessage(e.getMessage() + ChatColor.YELLOW + " (" + r2k(sb.toString()) + ")");
             }
 
         }
